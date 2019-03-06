@@ -1,4 +1,4 @@
-![hydrix](demo/demo1.gif)
+![hydrix demo1](demo/demo1.gif)
 # hydrix
 A command line tool to record and display as a tree the command line history for given sessions/projects. The tree is built according the visited folders. It comes with many companion commands to focus on parts on the tree filtered by time of execution, pattern of commands, path ... It also allows to reload selected history command (pushing it on top of bash history stack, accessible with keyboard arrows).
 
@@ -9,6 +9,7 @@ Can be combined with a pattern filter and an "age" (time spent since commands' f
 see MANUAL file
 filter.
 
+![hydrix demo2](demo/demo2.gif)
     Configuration instructions
 Basically there should be no depencies for most users: only python and bash are needed.
 More specifically, python version 2.7 is requiered. The series hydrix commands use GNU bash, and they were tested on version 4.3 and some lower and higher versions.
@@ -29,6 +30,7 @@ You may also customize :
 - paths you want to exclude: ~/.hydrix/IGNORED_paths file,
 - the aliases to hydrix commands ~/.hydrix/hydrix_bash_aliases.sh
 
+![hydrix demo3](demo/demo3.gif)
     File manifest (list of files included) 
 AUTHORS
 common.py

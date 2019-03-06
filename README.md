@@ -1,4 +1,4 @@
-<a href="https://imgflip.com/gif/2ve3rq"><img src="https://i.imgflip.com/2ve3rq.gif" title="made at imgflip.com"/></a>
+![hydrix](demo/demo1.gif)
 # hydrix
 A command line tool to record and display as a tree the command line history for given sessions/projects. The tree is built according the visited folders. It comes with many companion commands to focus on parts on the tree filtered by time of execution, pattern of commands, path ... It also allows to reload selected history command (pushing it on top of bash history stack, accessible with keyboard arrows).
 

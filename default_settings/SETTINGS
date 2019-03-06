@@ -1,0 +1,6 @@
+export HY_EDITOR="vi"
+export HY_CONSOLE="konsole"
+export HY_GHLANDER=1
+export HY_TRUE_COLORS=1
+export HY_UNICODE=1
+export HY_DEBUG=0

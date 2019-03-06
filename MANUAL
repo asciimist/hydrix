@@ -1,0 +1,117 @@
+MANUAL:
+Note: you may also use "hydrix -h"
+
+EXPLANATION OF THE HYDRIX SYSTEM:
+In hydrix you can navigate quickly through a history tree recorded in a "session".
+A session may correspond to an on-going project or any typical use you will make of terminal if you will need to go through the same series of directories and invoke similar command lines.
+The "hydrix" command display current session's tree.
+Successfull commands (returning code 0) history are automatically recorded just as the shell's own history system.
+The main difference with shell's usual history tools is that hydrix's history entries are organised according to the working directory where they were executed within a session.
+
+One can move to a another recorded session calling "hyChange N" with its session number or its given name (done using the "hyName" command, "hyChange" displays the list all sessions names, "hall" displays all trees of all sessions).
+Otherwise, by default, when opening a new tty (as done when opening a new tab in a virtual terminal emulator) one opens the session corresponding to the tty's number.
+Same sessions can be shared and modified on different ttys at the same time.
+
+
+...┐    ┌────────────────────CELL────────────────────────────────────────────┐    ┌...
+...│────│ /folder1/folder2                                                   │────│...
+...│    │ [cellIndex] (oldestEntryAge~freshestEntryAge)  (numberOfEntries!)  │    │...
+...│    │ EntryAge1:EntryIndex1 historyEntry1                                │    │...
+...│    │ EntryAge2:EntryIndex2 historyEntry2                                │    │...
+...┘    └────────────────────────────────────────────────────────────────────┘    └...
+Fig. 1: Trees' cell format
+
+                                  ┌───────────────────┐
+                               ┌──│ BB/               │
+                               │  │ [3] (2m~2m) (2!)  │
+                               │  │2m:1 cmd1          │
+                               │  └───────────────────┘
+                               │                               ┌──────────────────┐
+                               │                              ┌│/DD/              │
+                               │                              ││ [1] (1s~1h) (2!) │
+                               │                              ││1s:1 cmd1         │
+                               │                              ││1h:2 cmd2         │
+                               │                              │└──────sideCell────┘
+                               │                              │
+                               │                              │
+┌───────────────────────────┐  │  ┌─────────────────┐     ┌───│───────────────┐
+│ /A/                       │──┴──│ B/              │─────│ /C/D              │
+│ [5] (4m~1h)  (3!)         │     │ [4] (3m~3m) (1!)│     │ [2] (1m~2h)  (2!) │
+│4m:1 cmd1                  │     │3m:1 cmd1        │     │1m:1 cmd1          │
+│1h:2 cmd2                  │     └─────────────────┘     │2h:2 cmd2          │
+│1h:3 cmd3                  │                             └───────────────────┘
+└───────────────────────────┘
+Fig. 2: A tree for browsed paths "/A", "/A/B", "/A/BB", "/A/B/C/D" and "/A/B/C/DD".
+
+An hydrix tree is made of branches wearing leaves (called cells).
+
+Cells are small output block in which successfull history ("history entries") commands that were executed in the corresponding work directory are displayed.
+If a "TrueColors" capable VTE (virtual terminal emulator, such as konsole, xterm, gnome-term and other libvte-based terms if libvte>0.36, see https://askubuntu.com/questions/512525/how-to-enable-24bit-true-color-support-in-gnome-terminal) is used, the cells are colored according to a color gradient palette that goes from a fresh color (the color is associated with to the session's index) to dark grey.
+Cells with the most recent entries get the freshest colors and those with the oldest entries get the darker ones. This helps focusing on your freshest inputs.
+
+Entries displayed in cells have a basic syntax highlighting and they are numbered in given cells to ease their loading (see hyLoad). Entries' age in seconds (s), minutes (m), hours (h) or days (j) is displayed with the most relevant unit.
+This age information is also colored to highlight which commands were executed around the same period. The two top lines of a cell contain the cell index "[N]" (just as cell colors gradient, cell indexes are crescent with the age of their last entry).
+
+TREE SPAN MODIFICATION
+Cell index "[N]" may be used to :
+- navigate to associated working directory ("hycd N" is an alternative to "cd path")
+- permanently suppress the cell and children cells ("hyCut N") and all their entries
+- collapse the cell's descending cells ("hyBud N")
+- expand them back ("hyBlossom N")
+- zoom on a part of the tree by starting on that cell ("hyRoot N")
+
+The last line of the cell contains relative path associated to the cell.
+
+The straight branch at the bottom of the output (or top depending on hyReverse command) is called the trunk.
+
+If the shell's current working directory corresponds to a cell from current session, then the 'path line' is underlined and highlighted in sky blue.
+
+FILTERING WITH PATTERNS
+One may also apply age filters (time spent since command was entered), path filters and pattern to filter the entries.
+These filters may only once upon display or they can be persistent (applying on all subsequent tree display, until the filter is suppressed).
+The "hyGrep" and "hyTime" commands set persistent path/pattern filters and age filters respectively, while commands "hydrix" and "hyAll" can take simultaneously age filter arguments (with the "x~y", "x~" or "~y" syntax) and pattern arguments ("x" is a pattern for entries while any pattern containing "/" will be interpreted as a path search pattern).
+
+Some cell display parameters may be changed through dedicated commands:
+ - the number of displayed entry lines : hyLines
+ - the cell's width in columns : hyWidth
+ - to shorten the displayed length of cell's relative path : hyEllipsis
+ - for trees with too many levels which exceeding the terminal's width, "hyShiftView" allows to visualize portions of the tree.
+One may also "zoom" one cell only using "hyFocus" (or "hyff" to fully display long entry lines with line breaks).
+
+The "hystOn" and "hystOff" turn on and off the history.
+
+This is full list of hydrix commands (all of them have a "-h" for help string printing):
+hyAll
+hyArchiveCurrentSession
+hyBlob
+hyBlossom
+hyBud
+hycd
+hyChange
+hyClearCurrentSession
+hyClipboardCopy
+hyCompact
+hyCut
+hydrix
+hyEdit
+hyEllipsis
+hyff
+hyFocus
+hyGrep
+hyHead
+hyLines
+hyLoad
+hyLoadAllSessions
+hyName
+hyReverse
+hyRoot
+hyRoot_no_h
+hySaveAllSessions
+hySessionsClear
+hyShift
+hystOff
+hystOn
+hyTime
+hyWidth
+
+Convenience aliases can be set in the "hydrix_bash_aliases.sh" file
